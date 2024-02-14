@@ -51,17 +51,44 @@ class BookController extends Controller
 
     public function edit($id)
     {
-        $data = Book::where('id', $id)->first();
-        return view('book.edit', compact('data'));
+        $dataBook = Book::where('id', $id)->first();
+        return view('book.edit', compact('dataBook'));
     }
 
     public function update(Request $request, $id)
     {
-        Book::where('id', $id)->update([
-            'title' =>$request->title,
-            'writer' =>$request->writer,
-            'publisher' =>$request->publisher,
-            'year' =>$request->year,
+        $request->validate([
+            'title' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Perubahan validasi untuk memperbolehkan file kosong saat edit
+        ]);
+    
+        $book = Book::find($id);
+    
+        if ($request->hasFile('image')) {
+            // Hapus file gambar lama jika ada
+            if ($book->image) {
+                $oldImagePath = public_path('/assets/img/data/') . $book->image;
+                if (File::exists($oldImagePath)) {
+                    File::delete($oldImagePath);
+                }
+            }
+    
+            // Proses upload gambar baru
+            $image = $request->file('image');
+            $imgName = time() . rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('/assets/img/data/'), $imgName);
+    
+            $book->update([
+                'image' => $imgName,
+            ]);
+        }
+    
+        // Update data buku tanpa mengubah gambar jika tidak ada gambar baru
+        $book->update([
+            'title' => $request->title,
+            'writer' => $request->writer,
+            'publisher' => $request->publisher,
+            'year' => $request->year,
         ]);
         return redirect('/book')->with('editBook', 'Data buku berhasil diubah');
     }
