@@ -22,29 +22,23 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        //
         $request->validate([
-            'title' => 'required'
+            'title' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Tambahkan validasi untuk jenis file dan ukuran maksimum
         ]);
-
+        
         $image = $request->file('image');
-        $imgName = time().rand().'.'.$image->extension();
-
-        if(!file_exists(public_path('/assets/img/data/'.$image->getClientOriginalName()))){
-            //set untuk menyimpan file nya
-            $dPath = public_path('/assets/img/data/');
-            //memindahkan file yang diupload ke directory yang telah ditentukan
-            $image->move($dPath, $imgName);
-            $uploaded = $imgName;
-        }else{
-            $uploaded = $image->getClientOriginalName();
-        }
+        $imgName = time() . rand() . '.' . $image->getClientOriginalExtension();
+        
+        $dPath = public_path('/assets/img/data/');
+        $image->move($dPath, $imgName);
+        
         Book::create([
-            'title' =>$request->title,
-            'writer' =>$request->writer,
-            'image' =>$uploaded,
-            'publisher' =>$request->publisher,
-            'year' =>$request->year,
+            'title' => $request->title,
+            'writer' => $request->writer,
+            'image' => $imgName, // Gunakan nama file yang baru dibuat
+            'publisher' => $request->publisher,
+            'year' => $request->year,
         ]);
 
         return redirect()->route('book.index')->with('addBook', 'Berhasil menambahkan daftar buku');

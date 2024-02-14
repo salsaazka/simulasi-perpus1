@@ -41,13 +41,12 @@
                                           <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">{{ $officer['email'] }}</td>
                                           <td  class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">{{ $officer['address'] }}</td>
                                           <td class="d-flex">
-                                              {{-- <a href="{{ route('officer.edit', $officer->id) }}" class="btn btn-warning" style="margin-right: 5px"><i class="fa-solid fa-pen-to-square"></i></a>
-                                              <form action="/officer/delete/{{ $officer->id }}" method="POST">
+                                              {{-- <a href="{{ route('officer.edit', $officer->id) }}" class="btn btn-warning" style="margin-right: 5px"><i class="fa-solid fa-pen-to-square"></i></a> --}}
+                                              <form action="/delete-officer/{{ $officer->id }}" method="POST">
                                                   @method('DELETE')
                                                   @csrf
                                                   <button type="submit"  class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                                              </form> --}}
-                                          </td>
+                                              </form> 
                                       </tr>
                                   @endforeach
                               </tbody>
@@ -61,7 +60,7 @@
     @if(auth()->user()->role === 'admin' && 'user' && 'officer')
     <div class="mt-4">
       <h3 class=" text-primary text-center">
-          <strong>Buku Terpopuler</strong>
+          <strong>Buku Tersedia</strong>
       </h3>
       {{-- <div class="d-flex flex-wrap justify-content-around">
         @foreach ($book as $item)

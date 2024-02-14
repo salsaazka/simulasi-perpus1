@@ -28,6 +28,7 @@ Route::middleware([isLogin::class])->name('dashboard.')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('/create-officer', [AuthController::class, 'officer'])->name('officer');
     Route::post('/create-officer', [AuthController::class, 'createOfficer'])->name('createOfficer');
+    Route::delete('/delete-officer/{id}', [AuthController::class, 'deleteOfficer'])->name('deleteOfficer');
 });
 Route::get('/book', function () {
     return view('book.index');

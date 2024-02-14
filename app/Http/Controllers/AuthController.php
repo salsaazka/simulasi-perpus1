@@ -57,13 +57,12 @@ class AuthController extends Controller
 
     public function dashboard()
     {
-        $dataOffice = User::all();
+        $dataOffice = User::where('role', 'officer')->get();
         return view('dashboard', compact('dataOffice'));
     }
     public function officer()
     {
-        $dataOffice = User::all();
-        return view('admin.create-officer', compact('dataOffice'));
+        return view('admin.create-officer');
     }
     public function createOfficer(Request $request)
     {
@@ -85,6 +84,12 @@ class AuthController extends Controller
         return redirect('/dashboard')->with('success', 'Selamat, anda berhasil membuat akun!');
     }
 
+    public function deleteOfficer($id)
+    { 
+        //
+        User::where('id', $id)->delete();
+        return redirect('/dashboard')->with('delete', 'Data buku berhasil dihapus');
+    }
     public function logout()
     {
         Auth::logout();
