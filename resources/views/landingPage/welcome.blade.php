@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Aplikasi Kasir</title>
+    <title>Perpustakaan Digital</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -28,48 +28,52 @@
 </head>
 
 <body class="">
-    <nav class="navbar navbar-expand-lg border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4" style="color: #344767 !important">
-        <div class="container-fluid" >
-          <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
-            Perpustakaan Digital
-          </a>
-          <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon mt-2">
-              <span class="navbar-toggler-bar bar1"></span>
-              <span class="navbar-toggler-bar bar2"></span>
-              <span class="navbar-toggler-bar bar3"></span>
-            </span>
-          </button>
-          <div class="collapse navbar-collapse" id="navigation">
-            <ul class="navbar-nav mx-auto">
-              <li class="nav-item">
-                <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="{{ route('dashboard.dashboard') }}">
-                  <i class="fa fa-chart-pie opacity-6 text-light me-1"></i>
-                  Dashboard
-                </a>
-              </li>
-              {{-- <li class="nav-item">
-                <a class="nav-link me-2" href="../pages/profile.html">
-                  <i class="fa fa-user opacity-6 text-light me-1"></i>
-                  Profile
-                </a>
-              </li> --}}
-              <li class="nav-item">
-                <a class="nav-link me-2" href="{{ route('signUp') }}">
-                  <i class="fas fa-user-circle opacity-6 text-light me-1"></i>
-                  Sign Up
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link me-2" href="{{ route('signIn') }}">
-                  <i class="fas fa-key opacity-6 text-light me-1"></i>
-                  Sign In
-                </a>
-              </li>
-            </ul>
-          </div>
+    <nav class="navbar navbar-expand-lg border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4"
+        style="color: #5e72e4 !important">
+        <div class="container-fluid">
+            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
+                Perpustakaan Digital
+            </a>
+            <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon mt-2">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </span>
+            </button>
+            <div class="collapse navbar-collapse" id="navigation">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center me-2 active" aria-current="page"
+                            href="{{ route('dashboard.dashboard') }}">
+                            <i class="fa fa-chart-pie opacity-6 text-light me-1"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-2" href="{{ route('dashboard.listBook') }}">
+                            <i class="fa fa-user opacity-6 text-light me-1"></i>
+                            List Book
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-2" href="{{ route('signUp') }}">
+                            <i class="fas fa-user-circle opacity-6 text-light me-1"></i>
+                            Sign Up
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-2" href="{{ route('signIn') }}">
+                            <i class="fas fa-key opacity-6 text-light me-1"></i>
+                            Sign In
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </nav>
+    </nav>
     {{-- <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Aplikasi Kasir</a>
@@ -144,7 +148,8 @@
         <div class="row">
             <div class="col-4">
                 <div class="w-100 h-100 p-2 border rounded d-flex align-items-center">
-                    <img src="{{ url('assets/img/book-stack.png') }}" alt="" srcset="" style="width: 40px; height: 40px;">
+                    <img src="{{ url('assets/img/book-stack.png') }}" alt="" srcset=""
+                        style="width: 40px; height: 40px;">
                     <div class="ms-3">
                         <h4>
                             ISBN
@@ -155,7 +160,8 @@
             </div>
             <div class="col-4">
                 <div class="w-100 h-100 p-2 border rounded d-flex align-items-center">
-                    <img src="{{ url('assets/img/book-stack.png') }}" alt="" srcset="" style="width: 40px; height: 40px;">
+                    <img src="{{ url('assets/img/book-stack.png') }}" alt="" srcset=""
+                        style="width: 40px; height: 40px;">
                     <div class="ms-3">
                         <h4>
                             ISBN
@@ -166,7 +172,8 @@
             </div>
             <div class="col-4">
                 <div class="w-100 h-100 p-2 border rounded d-flex align-items-center">
-                    <img src="{{ url('assets/img/book-stack.png') }}" alt="" srcset="" style="width: 40px; height: 40px;">
+                    <img src="{{ url('assets/img/book-stack.png') }}" alt="" srcset=""
+                        style="width: 40px; height: 40px;">
                     <div class="ms-3">
                         <h4>
                             ISBN
@@ -189,13 +196,13 @@
     <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
     <script>
-      var win = navigator.platform.indexOf('Win') > -1;
-      if (win && document.querySelector('#sidenav-scrollbar')) {
-        var options = {
-          damping: '0.5'
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
-        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-      }
     </script>
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

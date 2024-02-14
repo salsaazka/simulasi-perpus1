@@ -21,6 +21,7 @@ use App\Http\Middleware\isLogin;
 Route::get('/', function () {
     return view('landingPage.welcome');
 });
+
 Route::middleware([isLogin::class])->name('dashboard.')->group(function () {
     // Route::get('/dashboard', function () {
     //     return view('dashboard');
@@ -29,6 +30,7 @@ Route::middleware([isLogin::class])->name('dashboard.')->group(function () {
     Route::get('/create-officer', [AuthController::class, 'officer'])->name('officer');
     Route::post('/create-officer', [AuthController::class, 'createOfficer'])->name('createOfficer');
     Route::delete('/delete-officer/{id}', [AuthController::class, 'deleteOfficer'])->name('deleteOfficer');
+    Route::get('/list-book', [BookController::class, 'list'])->name('listBook');
 });
 Route::get('/book', function () {
     return view('book.index');

@@ -6,50 +6,51 @@ use App\Models\Borrow;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class BorrowController extends Controller
 {
-  
+
     public function index()
     {
         $dataBorrow = Borrow::all();
         return view('borrow.index', compact('dataBorrow'));
     }
 
-   
+
     public function create()
     {
         return view('borrow.create-borrow');
     }
 
-    
+
     public function store(Request $request)
     {
-       
+
         Borrow::create([
             'user_id' => $request->user_id,
             'book_id' => $request->book_id,
-            'start_date' => $request->start_date,
+            'start_date' => now()->toDateString(),
             'end_date' => $request->end_date,
             'status' => $request->status,
         ]);
-        return view('/borrow')->with('add', 'Data Peminjaman berhasil ditambahkan');
+        return redirect()->back()->with('add', 'Data Peminjaman berhasil ditambahkan');
     }
 
-    
+
     public function show(Borrow $borrow)
     {
         //
     }
 
-    
+
     public function edit($id)
     {
         $data = Borrow::where('id', $id)->first();
         return view('borrow.edit', compact('data'));
     }
 
-    
+
     public function update(Request $request, $id)
     {
         Borrow::where('id', $id)->update([
@@ -62,7 +63,7 @@ class BorrowController extends Controller
         return view('/borrow')->with('editBor', 'Data Peminjaman berhasil diubah');
     }
 
-     
+
     public function destroy($id)
     {
         Borrow::where('id', $id)->delete();
