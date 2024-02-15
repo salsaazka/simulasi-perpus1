@@ -56,34 +56,34 @@
                         <span class="nav-link-text ms-1">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->path() == 'book.index' ? 'active' : '' }}" href="/book">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Book</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->path() == 'category.index' ? 'active' : '' }}" href="/category">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Category</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->path() == 'review.index' ? 'active' : '' }}" href="/review">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Review</span>
-                    </a>
-                </li>
-                @if(auth()->user()->role === 'user')
+                @if(auth()->user()->role === 'officer' && 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->path() == 'book.index' ? 'active' : '' }}" href="/book">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Book</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->path() == 'category.index' ? 'active' : '' }}" href="/category">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Category</span>
+                        </a>
+                    </li>
+                    {{-- <li class="nav-item">
+                        <a class="nav-link {{ request()->path() == 'review.index' ? 'active' : '' }}" href="/review">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Review</span>
+                        </a>
+                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link {{ request()->path() == 'borrow.index' ? 'active' : '' }}"
                             href="/borrow">
@@ -95,7 +95,18 @@
                         </a>
                     </li>
                 @endif
-
+                @if(auth()->user()->role === 'user')
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->path() == 'collection.index' ? 'active' : '' }}"
+                            href="/collection">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">collection</span>
+                        </a>
+                    </li>
+                @endif
                 {{-- <li class="nav-item {{ request()->path() == 'signIn' ? 'active' : '' }}">
                     <a class="nav-link " href="{{ route('signIn') }}">
                         <div

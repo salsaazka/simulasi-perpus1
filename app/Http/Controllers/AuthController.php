@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Book;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -58,7 +59,8 @@ class AuthController extends Controller
     public function dashboard()
     {
         $dataOffice = User::where('role', 'officer')->get();
-        return view('dashboard', compact('dataOffice'));
+        $dataBook = Book::all();
+        return view('dashboard', compact('dataOffice', 'dataBook'));
     }
     public function officer()
     {

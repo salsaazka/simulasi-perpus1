@@ -52,12 +52,12 @@
                             Dashboard
                         </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link me-2" href="{{ route('dashboard.listBook') }}">
                             <i class="fa fa-user opacity-6 text-light me-1"></i>
                             List Book
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link me-2" href="{{ route('signUp') }}">
                             <i class="fas fa-user-circle opacity-6 text-light me-1"></i>
