@@ -49,11 +49,11 @@ class BookController extends Controller
         //
     }
 
-    public function list(Book $book)
-    {
-        $dataBook = Book::all();
-        return view('landingPage.book', compact('dataBook'));
-    }
+    // public function list(Book $book)
+    // {
+    //     $dataBook = Book::all();
+    //     return view('landingPage.book', compact('dataBook'));
+    // }
 
     public function edit($id)
     {

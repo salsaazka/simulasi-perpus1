@@ -12,7 +12,9 @@ class CollectionController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::id();
+        $collection = Collection::where('id', $user)->get();
+        
     }
 
     /**
