@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Borrow;
 use App\Models\Book;
 use App\Models\User;
+use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -31,8 +32,13 @@ class BorrowController extends Controller
             'user_id' => $request->user_id,
             'book_id' => $request->book_id,
             'start_date' => now()->toDateString(),
-            'end_date' => $request->end_date,
+            'end_date' => now()->addDays(10)->toDateString(),
             'status' => $request->status,
+        ]);
+
+        Collection::create([
+            'user_id' => $request->user_id,
+            'book_id' => $request->book_id,
         ]);
         return redirect()->back()->with('add', 'Data Peminjaman berhasil ditambahkan');
     }
