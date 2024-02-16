@@ -61,38 +61,56 @@ class BorrowController extends Controller
                 'status' => 'Dipinjam',
             ]);
 
+            Collection::create([
+                'user_id' => $request->user_id,
+                'book_id' => $request->book_id,
+            ]);
+
             return redirect()->back()->with('success', 'Buku berhasil dipinjam.');
         } else {
             // Jika buku sudah dipinjam, set status menjadi "Dikembalikan"
             $borrowedBook->update(['status' => 'Dikembalikan']);
 
             return redirect()->back()->with('success', 'Buku berhasil dikembalikan.');
-        } 
+        }
     }
 
     public function returnBook(Request $request)
     {
-        
-        $borrowedBook = Borrow::where('user_id', $request->user_id)
-            ->where('book_id', $request->book_id)
-            ->where('status', 'Dipinjam')
-            ->first();
+        $data = Borrow::where('book_id', $request->book_id)->first();
+        $data->update([
+            'status' => 'Dikembalikan',
+            'end_date' => now()->toDateString(),
+        ]);
 
-        if ($borrowedBook) {
-            // Tambahkan log untuk melihat nilai variabel
-            \Log::info('Data Before Update:', ['data' => $borrowedBook->toArray()]);
+        Collection::where('book_id', $request->book_id)->delete();
 
-            // Hapus data peminjaman
-            $borrowedBook->delete();
-
-            // Tambahkan log untuk melihat data setelah update
-            \Log::info('Data After Update:', ['data' => $borrowedBook->fresh()->toArray()]);
-
-            return redirect()->back()->with('success', 'Buku berhasil dikembalikan.');
-        } else {
-            return redirect()->back()->with('error', 'Buku tidak sedang dipinjam atau data peminjaman tidak ditemukan.');
-        }
+        return redirect()->back()->with('success', 'Buku berhasil dikembalikan.');
     }
+
+    // public function returnBook(Request $request)
+    // {
+
+    //     $borrowedBook = Borrow::where('user_id', $request->user_id)
+    //         ->where('book_id', $request->book_id)
+    //         ->where('status', 'Dipinjam')
+    //         ->first();
+
+    //     if ($borrowedBook) {
+    //         // Tambahkan log untuk melihat nilai variabel
+    //         \Log::info('Data Before Update:', ['data' => $borrowedBook->toArray()]);
+
+    //         // Hapus data peminjaman
+    //         $borrowedBook->delete();
+
+    //         // Tambahkan log untuk melihat data setelah update
+    //         \Log::info('Data After Update:', ['data' => $borrowedBook->fresh()->toArray()]);
+
+    //         return redirect()->back()->with('success', 'Buku berhasil dikembalikan.');
+    //     } else {
+    //         return redirect()->back()->with('error', 'Buku tidak sedang dipinjam atau data peminjaman tidak ditemukan.');
+    //     }
+    // }
 
     public function show(Borrow $borrow)
     {

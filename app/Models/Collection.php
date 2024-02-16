@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Book;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,4 +13,9 @@ class Collection extends Model
         'user_id',
         'book_id'
     ];
+
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
 }
