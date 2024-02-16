@@ -60,6 +60,8 @@ Route::middleware('isLogin')->prefix('/borrow')->name('borrow.')->group(function
     Route::get('/', [BorrowController::class, 'index'])->name('index');
     Route::get('/create-borrow', [BorrowController::class, 'create'])->name('create');
     Route::post('/create-borrow', [BorrowController::class, 'store'])->name('store');
+    Route::post('/borrow', [BorrowController::class, 'borrowBook'])->name('borrowBook');
+    Route::post('/return', [BorrowController::class, 'returnBook'])->name('returnBook');
     Route::get('/edit/{id}', [BorrowController::class, 'edit'])->name('edit');
     Route::patch('/update/{id}', [BorrowController::class, 'update'])->name('update');
     Route::delete('/delete/{id}', [BorrowController::class, 'destroy'])->name('destroy');

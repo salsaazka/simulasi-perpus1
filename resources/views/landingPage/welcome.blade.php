@@ -43,21 +43,8 @@
                     <span class="navbar-toggler-bar bar3"></span>
                 </span>
             </button>
-            <div class="collapse navbar-collapse" id="navigation">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center me-2 active" aria-current="page"
-                            href="{{ route('dashboard.dashboard') }}">
-                            <i class="fa fa-chart-pie opacity-6 text-light me-1"></i>
-                            Dashboard
-                        </a>
-                    </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link me-2" href="{{ route('dashboard.listBook') }}">
-                            <i class="fa fa-user opacity-6 text-light me-1"></i>
-                            List Book
-                        </a>
-                    </li> --}}
+            <div class="collapse navbar-collapse " id="navigation">
+                <ul class="navbar-nav mx-auto justify-content-end">
                     <li class="nav-item">
                         <a class="nav-link me-2" href="{{ route('signUp') }}">
                             <i class="fas fa-user-circle opacity-6 text-light me-1"></i>
@@ -104,7 +91,7 @@
         </div>
     </nav> --}}
 
-    <div id="carouselExampleIndicators" class="carousel slide">
+    {{-- <div id="carouselExampleIndicators" class="carousel slide">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
                 aria-current="true" aria-label="Slide 1"></button>
@@ -137,9 +124,57 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
+    </div> --}}
+    <div class="container mt-5">
+        <div class="d-flex w-100 align-items-center">
+            <div class="w-100 w-md-50">
+                <h2 class="text-primary pt-5">
+                    <strong>Selamat Datang di Perpustakaan Digital!</strong>
+                </h2>
+                <span class="text-muted fs-6">
+                    Kami menyambut Anda untuk menjelajahi keberagaman bahan perpustakaan digital online kami, 
+                    termasuk jurnal, dan karya-karya referensi online lainnya. 
+                    Setiap anggota E-Book yang telah memiliki nomor anggota yang sah berhak memanfaatkan layanan koleksi digital online kami. 
+                    Bergabunglah dan nikmati akses mudah ke pengetahuan yang tak terbatas!</span>
+                
+                {{-- <div class="d-flex mt-4">
+                    <button class="btn btn-donasi btn-primary me-1">
+                        <a href="/auth/register" class="text-white text-decoration-none">Registrasi</a>
+                    </button>
+                    <button class="btn btn-donasi-outline btn-outline-primary">
+                        <a href="{{ route('login') }}" class="text-decoration-none">Login</a>
+                    </button>
+                </div> --}}
+            </div>
+            <div class="w-100 w-md-50">
+                <center>
+                    <img src="{{ asset('assets/img/book1.png') }}" alt="" class="w-75">
+                </center>
+            </div>
+        </div>
+        <div class="d-flex w-100 align-items-center">
+            <div class="w-100 w-md-50">
+                <center>
+                    <img src="{{ asset('assets/img/book-2.png') }}" alt="" class="w-75">
+                </center>
+            </div>
+            <div class="w-100 w-md-50">
+                <h2 class=" text-primary">
+                    <strong>Tentang Kami</strong>
+                </h2>
+                <span class="text-muted fs-6">Perpustakaan Nasional melaksanakan tugas pemerintahan di bidang perpustakaan
+                    sesuai dengan ketentuan peraturan perundang-undangan meliputi: <br><br>
+
+                    menetapkan kebijakan nasional, kebijakan umum, dan kebijakan teknis pengelolaan perpustakaan;
+                    melaksanakan pembinaan, pengembangan, evaluasi, dan koordinasi terhadap pengelolaan perpustakaan;
+                    membina kerja sama dalam pengelolaan berbagai jenis perpustakaan; dan
+                    mengembangkan standar nasional perpustakaan.
+                </span>
+            </div>
+        </div>
     </div>
 
-    <div class="w-100 mt-3 d-flex flex-column align-items-center">
+    <div class="w-100 mt-5 d-flex flex-column align-items-center">
         <h2>Fasilitas Kami</h2>
         <p>Fasilitas Perpustakan Wikrama</p>
     </div>

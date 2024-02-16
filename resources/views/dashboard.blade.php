@@ -61,7 +61,7 @@
     <div class="mt-4">
       <div class="w-100 container" style="margin-top: 6rem">
         <div>
-            <h3 class="text-center">List Book</h1>
+            <h3 class="text-center text-light fw-bold">List Book</h1>
         </div>
 
         <div class="d-flex flex-wrap">
@@ -80,7 +80,27 @@
                             <p class="mb-0" style="color: #828282; font-size: 14px">{{ $item->writer }}</p>
                             <i class="mb-0" style="color: #1A1C19; font-size: 14px">{{ $item->publisher }}</i>
                             <button class="btn btn-primary mt-3 mb-0" style="width: 100%" data-bs-toggle="modal"
-                                data-bs-target="#editModal" data-url="{{ route('borrow.store') }}" data-auth="{{Auth::user()->id}}" data-book="{{ $item->id }}">Pinjam</button>
+                                data-bs-target="#editModal" data-url="{{ route('borrow.borrowBook') }}" data-auth="{{Auth::user()->id}}" data-book="{{ $item->id }}">Pinjam</button>
+                                
+                            {{-- @php
+                                $bookStatus = $item->status; // Gantilah ini dengan nama kolom status yang sesuai di tabel buku
+                            @endphp
+                            
+                            <form action="{{ route('borrow.borrowBook') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                <input type="hidden" name="book_id" value="{{ $item->id }}">
+                            
+                                <button type="submit" class="btn 
+                                    @if($bookStatus == 'Dipinjam') btn-warning
+                                    @elseif($bookStatus == 'Dikembalikan') btn-success disabled
+                                    @else btn-primary
+                                    @endif mt-3 mb-0" style="width: 100%">
+                                    @if($bookStatus == 'Dipinjam') Dikembalikan
+                                    @else Pinjam
+                                    @endif
+                                </button>
+                            </form>                         --}}
                         </div>
                     </div>
                 </div>
@@ -88,15 +108,7 @@
         </div>
 
         <!-- Modal Edit -->
-        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable">
-                <div class="modal-content" id="modal-content">
-
-                    {{-- content here --}}
-
-                </div>
-            </div>
-        </div>
+        
         <!-- End Modal Edit -->
 
     </div>

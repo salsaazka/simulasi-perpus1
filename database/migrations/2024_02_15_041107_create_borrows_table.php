@@ -17,11 +17,10 @@ return new class extends Migration
             $table->bigInteger('book_id');
             $table->date('start_date');
             $table->date('end_date');
-            $table->enum('status',  ['Tersedia', 'Sedang Dipinjam', 'Sudah Dikembalikan'])->default('Tersedia');
+            $table->enum('status',  ['Dipinjam', 'Dikembalikan']);
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

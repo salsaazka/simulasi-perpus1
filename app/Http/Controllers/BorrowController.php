@@ -37,6 +37,56 @@ class BorrowController extends Controller
         return redirect()->back()->with('add', 'Data Peminjaman berhasil ditambahkan');
     }
 
+    public function borrowBook(Request $request)
+    {
+
+        $borrowedBook = Borrow::where('user_id', $request->user_id)
+        ->where('book_id', $request->book_id)
+        ->where('status', 'Dipinjam')
+        ->first();
+
+        if (!$borrowedBook) {
+            // Jika buku belum pernah dipinjam, buat data peminjaman baru
+            Borrow::create([
+                'user_id' => $request->user_id,
+                'book_id' => $request->book_id,
+                'start_date' => now()->toDateString(),
+                'end_date' => $request->end_date,
+                'status' => 'Dipinjam',
+            ]);
+
+            return redirect()->back()->with('success', 'Buku berhasil dipinjam.');
+        } else {
+            // Jika buku sudah dipinjam, set status menjadi "Dikembalikan"
+            $borrowedBook->update(['status' => 'Dikembalikan']);
+
+            return redirect()->back()->with('success', 'Buku berhasil dikembalikan.');
+        } 
+    }
+
+    public function returnBook(Request $request)
+    {
+        
+        $borrowedBook = Borrow::where('user_id', $request->user_id)
+            ->where('book_id', $request->book_id)
+            ->where('status', 'Dipinjam')
+            ->first();
+
+        if ($borrowedBook) {
+            // Tambahkan log untuk melihat nilai variabel
+            \Log::info('Data Before Update:', ['data' => $borrowedBook->toArray()]);
+
+            // Hapus data peminjaman
+            $borrowedBook->delete();
+
+            // Tambahkan log untuk melihat data setelah update
+            \Log::info('Data After Update:', ['data' => $borrowedBook->fresh()->toArray()]);
+
+            return redirect()->back()->with('success', 'Buku berhasil dikembalikan.');
+        } else {
+            return redirect()->back()->with('error', 'Buku tidak sedang dipinjam atau data peminjaman tidak ditemukan.');
+        }
+    }
 
     public function show(Borrow $borrow)
     {
