@@ -46,7 +46,7 @@
                                                   @method('DELETE')
                                                   @csrf
                                                   <button type="submit"  class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                                              </form> 
+                                              </form>
                                       </tr>
                                   @endforeach
                               </tbody>
@@ -66,7 +66,8 @@
 
         <div class="d-flex flex-wrap">
             {{-- @dd(Auth::user()) --}}
-            @foreach ($dataBook as $item)
+            {{-- @dd($bookFilter) --}}
+            @foreach ($bookFilter as $item)
                 <div class="w-25 d-flex justify-content-center align-items-center">
                     <div class="card p-1" style="width: 95%">
                         <div class="w-100 overflow-hidden d-flex rounded position-relative"
@@ -108,7 +109,15 @@
         </div>
 
         <!-- Modal Edit -->
-        
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" id="modal-content">
+
+                    {{-- content here --}}
+
+                </div>
+            </div>
+        </div>
         <!-- End Modal Edit -->
 
     </div>
@@ -254,23 +263,17 @@
     $('#editModal').on('shown.bs.modal', function(e) {
         var html = `
         <div class="modal-content" id="modal-content">
-            <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
                 <div class="modal-body">
                     <form method="post" action="${$(e.relatedTarget).data('url')}">
                         @csrf
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Tanggal Pengembalian</label>
-                            <input type="date" name="end_date" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp">
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <p>Are you sure want to borrow this book?</p>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                         <input type="hidden" name="user_id" value="${$(e.relatedTarget).data('auth')}">
                         <input type="hidden" name="book_id" value="${$(e.relatedTarget).data('book')}">
-                        <input type="hidden" name="status" value="Sedang Dipinjam">
+                        <input type="hidden" name="status" value="Dipinjam">
                        <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>

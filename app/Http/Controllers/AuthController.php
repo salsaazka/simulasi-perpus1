@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use App\Models\Book;
+use App\Models\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -16,13 +18,15 @@ class AuthController extends Controller
 
     public function auth(Request $request)
     {
-        $request->validate([
-            'username' => 'required|exists:users,username',
-            'password' => 'required'
-        ],
-        [
-            'username.exists' => "Username ini tidak tersedia"
-        ]);
+        $request->validate(
+            [
+                'username' => 'required|exists:users,username',
+                'password' => 'required'
+            ],
+            [
+                'username.exists' => "Username ini tidak tersedia"
+            ]
+        );
 
         $user = $request->only('username', 'password');
         if (Auth::attempt($user)) {
@@ -59,8 +63,12 @@ class AuthController extends Controller
     public function dashboard()
     {
         $dataOffice = User::where('role', 'officer')->get();
-        $dataBook = Book::all();
-        return view('dashboard', compact('dataOffice', 'dataBook'));
+
+        $bookIdsInCollection = Collection::pluck('book_id');
+        $booksNotInCollection = Book::whereNotIn('id', $bookIdsInCollection)->get();
+        $bookFilter = $booksNotInCollection;
+
+        return view('dashboard', compact('dataOffice', 'bookFilter'));
     }
     public function officer()
     {
@@ -87,7 +95,7 @@ class AuthController extends Controller
     }
 
     public function deleteOfficer($id)
-    { 
+    {
         //
         User::where('id', $id)->delete();
         return redirect('/dashboard')->with('delete', 'Data buku berhasil dihapus');
