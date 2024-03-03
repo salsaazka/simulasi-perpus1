@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Book;
 use App\Models\Collection;
+use App\Models\Review;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -67,8 +68,9 @@ class AuthController extends Controller
         $bookIdsInCollection = Collection::pluck('book_id');
         $booksNotInCollection = Book::whereNotIn('id', $bookIdsInCollection)->get();
         $bookFilter = $booksNotInCollection;
+        $review = Review::get();
 
-        return view('dashboard', compact('dataOffice', 'bookFilter'));
+        return view('dashboard', compact('dataOffice', 'bookFilter', 'review'));
     }
     public function officer()
     {
