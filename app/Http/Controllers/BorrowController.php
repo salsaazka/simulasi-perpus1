@@ -6,6 +6,7 @@ use App\Models\Borrow;
 use App\Models\Book;
 use App\Models\User;
 use App\Models\Collection;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -47,9 +48,9 @@ class BorrowController extends Controller
     {
 
         $borrowedBook = Borrow::where('user_id', $request->user_id)
-        ->where('book_id', $request->book_id)
-        ->where('status', 'Dipinjam')
-        ->first();
+            ->where('book_id', $request->book_id)
+            ->where('status', 'Dipinjam')
+            ->first();
 
         if (!$borrowedBook) {
             // Jika buku belum pernah dipinjam, buat data peminjaman baru
@@ -77,12 +78,19 @@ class BorrowController extends Controller
 
     public function returnBook(Request $request)
     {
+        // dd($request->all());
         $data = Borrow::where('book_id', $request->book_id)->first();
         $data->update([
             'status' => 'Dikembalikan',
             'end_date' => now()->toDateString(),
         ]);
 
+        Review::create([
+            'user_id' => $request->user_id,
+            'book_id' => $request->book_id,
+            'review' => $request->review,
+            'rating' => $request->rating,
+        ]);
         Collection::where('book_id', $request->book_id)->delete();
 
         return redirect()->back()->with('success', 'Buku berhasil dikembalikan.');
