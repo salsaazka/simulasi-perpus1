@@ -13,7 +13,7 @@ class ReviewController extends Controller
     public function index()
     {
         $dataReview = Review::all();
-        // return view('')
+        return view('admin.data-review', compact('dataReview'));
     }
 
     /**

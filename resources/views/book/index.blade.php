@@ -1,4 +1,4 @@
-@extends('layouts.index')
+@extends('layouts.sidebar')
 
 @section('content')
     <div>
@@ -57,6 +57,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
+        </div>
     </div>
 @endsection

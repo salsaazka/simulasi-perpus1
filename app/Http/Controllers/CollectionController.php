@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CollectionController extends Controller
 {
-    /**
+    /*
      * Display a listing of the resource.
      */
     public function index()

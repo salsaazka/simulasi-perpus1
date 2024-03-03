@@ -56,7 +56,7 @@
                         <span class="nav-link-text ms-1">Dashboard</span>
                     </a>
                 </li>
-                @if(auth()->user()->role === 'officer' && 'admin')
+                @if(auth()->user()->role === 'admin' || 'officer')
                     <li class="nav-item">
                         <a class="nav-link {{ request()->path() == 'book.index' ? 'active' : '' }}" href="/book">
                             <div
@@ -75,15 +75,6 @@
                             <span class="nav-link-text ms-1">Category</span>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link {{ request()->path() == 'review.index' ? 'active' : '' }}" href="/review">
-                            <div
-                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-                            </div>
-                            <span class="nav-link-text ms-1">Review</span>
-                        </a>
-                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link {{ request()->path() == 'borrow.index' ? 'active' : '' }}"
                             href="/borrow">
@@ -94,6 +85,16 @@
                             <span class="nav-link-text ms-1">Borrow</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->path() == 'review.index' ? 'active' : '' }}" href="/review">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Review</span>
+                        </a>
+                    </li>
+                    
                 @endif
                 @if(auth()->user()->role === 'user')
                     <li class="nav-item">

@@ -1,4 +1,4 @@
-@extends('layouts.index')
+@extends('layouts.sidebar')
 
 @section('content')
 <div>
@@ -162,7 +162,7 @@
 <script>
     var ctx1 = document.getElementById("chart-line").getContext("2d");
 
-    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50); 
 
     gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
     gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
