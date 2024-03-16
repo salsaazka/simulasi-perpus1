@@ -55,6 +55,8 @@ Route::middleware('isLogin')->prefix('/book')->name('book.')->group(function () 
     Route::get('/edit/{id}', [BookController::class, 'edit'])->name('edit');
     Route::patch('/update/{id}', [BookController::class, 'update'])->name('update');
     Route::delete('/delete/{id}', [BookController::class, 'destroy'])->name('destroy');
+    Route::get('/export_excel', [BookController::class, 'exportExcel'])->name('exportExcel');
+    Route::get('/export_pdf', [BookController::class, 'exportPdf'])->name('exportPdf');
 });
 
 Route::middleware('isLogin')->prefix('/borrow')->name('borrow.')->group(function () {
@@ -66,6 +68,9 @@ Route::middleware('isLogin')->prefix('/borrow')->name('borrow.')->group(function
     Route::get('/edit/{id}', [BorrowController::class, 'edit'])->name('edit');
     Route::patch('/update/{id}', [BorrowController::class, 'update'])->name('update');
     Route::delete('/delete/{id}', [BorrowController::class, 'destroy'])->name('destroy');
+    Route::get('/export_excel', [BorrowController::class, 'exportExcel'])->name('exportExcel');
+    Route::get('/export_pdf', [BorrowController::class, 'exportPdf'])->name('exportPdf');
+    
 });
 
 Route::middleware('isLogin')->prefix('/category')->name('category.')->group(function () {

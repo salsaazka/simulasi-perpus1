@@ -16,4 +16,9 @@ class Book extends Model
         'publisher',
         'year',
     ];
+
+    public function category()
+    {
+       return $this->belongsTo(Category::class);
+    }
 }

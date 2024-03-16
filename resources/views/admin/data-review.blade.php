@@ -32,8 +32,8 @@
                                     @foreach ($dataReview as $review)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $review['user_id'] }}</td>
-                                        <td>{{ $review['book_id'] }}</td>
+                                        <td>{{ $review->user->name }}</td>
+                                        <td>{{ $review->book->title }}</td>
                                         <td>{{ $review['rating'] }}</td>
                                         <td>{{ $review['review'] }}</td>
                                         {{-- <td class="d-flex">

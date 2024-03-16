@@ -12,7 +12,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $dataReview = Review::all();
+        $dataReview = Review::with(['user', 'book'])->get();
         return view('admin.data-review', compact('dataReview'));
     }
 
@@ -51,6 +51,7 @@ class ReviewController extends Controller
      */
     public function edit($id)
     {
+        
     }
 
     /**

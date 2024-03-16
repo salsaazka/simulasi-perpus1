@@ -7,10 +7,14 @@
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex align-items-center justify-content-between">
                             <h6>Data table</h6>
-                            @if(auth()->user()->role === 'user')
-                            <a href="{{ route('borrow.create') }}" class="btn add-new btn-success m-1 float-end"><i
-                                    class="fa-solid fa-plus"></i></a>
-                            @endif
+                           
+                            <div class="d-flex">
+                                @if(auth()->user()->role === 'user')
+                                    <a href="{{ route('borrow.create') }}" class="btn add-new btn-success " style="margin-right: 5px"><i class="fa-solid fa-plus"></i></a>    
+                                @endif
+                                    <a href="{{ route('borrow.exportExcel') }}" class="btn add-new btn-success" style="margin-right: 5px"><i class="fa-solid fa-file-excel"></i></a>
+                                    <a href="{{ route('borrow.exportPdf') }}" class="btn add-new btn-warning"><i class="fa-regular fa-file-pdf"></i></a>
+                            </div>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
@@ -19,6 +23,8 @@
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 NO</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                User</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                 Book</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -39,8 +45,9 @@
                                         @foreach ($dataBorrow as $borrow)
                                             <tr>
                                                 <td>{{ $no++ }}</td>
-                                                <td>{{ $borrow['book_id'] }}</td>
-                                                <td>{{ $borrow['stat_date'] }}</td>
+                                                <td>{{ $borrow->user->name }}</td>
+                                                <td>{{ $borrow->book->title }}</td>
+                                                <td>{{ $borrow['start_date'] }}</td>
                                                 <td>{{ $borrow['end_date'] }}</td>
                                                 <td>{{ $borrow['status'] }}</td>
                                                 <td class="d-flex">
@@ -60,7 +67,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
@@ -326,6 +333,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
     </div>
 @endsection

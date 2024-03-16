@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Exports\BooksExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
+use PDF;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -10,10 +15,26 @@ class BookController extends Controller
 
     public function index()
     {
-        $dataBook = Book::all();
+        $dataBook = Book::with(['category'])->get();
         return view('book.index', compact('dataBook'));
     }
 
+    public function exportExcel()
+    {
+        return Excel::download(new BooksExport, 'Books.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $dataBook = Book::orderBy('id', 'ASC')->get();
+        // share $dataBook to view (ambil data) -> redirect ke halaman view sama seperti compact
+        view()->share('dataBook',$dataBook);
+        // yang didalam petik nama yang ada di blade, $ ambil nama variable untuk models
+        //kalau mau 'book.exportPdf'
+        $pdf = PDF::loadView('book.bookPdf', $dataBook->toArray());
+        // download PDF file with download method
+        return $pdf->download('Data Buku.pdf', compact('dataBook'));
+    }
 
     public function create()
     {

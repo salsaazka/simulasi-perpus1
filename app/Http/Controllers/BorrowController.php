@@ -7,6 +7,9 @@ use App\Models\Book;
 use App\Models\User;
 use App\Models\Collection;
 use App\Models\Review;
+use App\Exports\BorrowsExport;
+use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -15,10 +18,38 @@ class BorrowController extends Controller
 
     public function index()
     {
-        $dataBorrow = Borrow::all();
+        $dataBorrow = Borrow::with(['user', 'book'])->get();
         return view('borrow.index', compact('dataBorrow'));
     }
 
+    public function exportExcel()
+    {
+        return Excel::download(new BorrowsExport, 'Borrow.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $dataBorrow = Borrow::select(
+            'borrows.id as no',
+            'users.name as user',
+            'books.title as title',
+            'borrows.start_date as start_date',
+            'borrows.end_date as end_date',
+            'borrows.status as status'
+        )
+        ->join('users', 'borrows.user_id', '=', 'users.id')
+        ->join('books', 'borrows.book_id', '=', 'books.id')
+        ->orderBy('borrows.id', 'ASC')
+        ->get();
+        // $dataBorrow = Borrow::orderBy('id', 'ASC')->get();
+        // share $dataBorrow to view (ambil data) -> redirect ke halaman view sama seperti compact
+        view()->share('dataBorrow',$dataBorrow);
+        // yang didalam petik nama yang ada di blade, $ ambil nama variable untuk models
+        //kalau mau 'borrow.exportPdf'
+        $pdf = PDF::loadView('borrow.borrowPdf', $dataBorrow->toArray());
+        // download PDF file with download method
+        return $pdf->download('Data Peminjaman.pdf');
+    }
 
     public function create()
     {
