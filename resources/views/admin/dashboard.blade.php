@@ -8,7 +8,7 @@
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex align-items-center justify-content-between">
                             <h6>Data table</h6>
-                            <a href="{{ route('dashboard.officer') }}" class="btn add-new btn-success m-1 float-end"><i
+                            <a href="{{ route('dashboard.createUser') }}" class="btn add-new btn-success m-1 float-end"><i
                                     class="fa-solid fa-plus"></i></a>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
@@ -55,7 +55,7 @@
                                                     class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">
                                                     {{ $officer['address'] }}</td>
                                                 <td class="d-flex">
-                                                    {{-- <a href="{{ route('officer.edit', $officer->id) }}" class="btn btn-warning" style="margin-right: 5px"><i class="fa-solid fa-pen-to-square"></i></a> --}}
+                                                    <a href="{{ route('officer.edit', $officer->id) }}" class="btn btn-warning" style="margin-right: 5px"><i class="fa-solid fa-pen-to-square"></i></a>
                                                     <form action="/delete-officer/{{ $officer->id }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
@@ -117,7 +117,7 @@
                                             data-img="{{ url('assets/img/data/' . $item->image) }}"
                                             data-review="{{ htmlspecialchars(json_encode(DB::table('reviews')->where('book_id', $item->id)->get()),ENT_QUOTES,'UTF-8') }}"
                                             data-title="{{ $item->title }}">
-                                            Pinjam
+                                            Borrow
                                         </button>
                                     </div>
                                 </div>

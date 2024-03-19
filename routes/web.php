@@ -28,9 +28,11 @@ Route::middleware([isLogin::class])->name('dashboard.')->group(function () {
     //     return view('dashboard');
     // })->name('dashboard');
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-    Route::get('/create-officer', [AuthController::class, 'officer'])->name('officer');
-    Route::post('/create-officer', [AuthController::class, 'createOfficer'])->name('createOfficer');
-    Route::delete('/delete-officer/{id}', [AuthController::class, 'deleteOfficer'])->name('deleteOfficer');
+    Route::get('/create-user', [AuthController::class, 'user'])->name('user');
+    Route::post('/create-user', [AuthController::class, 'createUser'])->name('createUser');
+    Route::get('/edit/{id}', [AuthController::class, 'edit'])->name('edit');
+    Route::patch('/update-user/{id}', [AuthController::class, 'updateUser'])->name('updateUser');
+    Route::delete('/delete-user/{id}', [AuthController::class, 'deleteUser'])->name('deleteUser');
     Route::get('/list-book', [BookController::class, 'list'])->name('listBook');
 });
 Route::get('/book', function () {
