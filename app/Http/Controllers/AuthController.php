@@ -58,19 +58,14 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'address' => $request->address,
         ]);
-        return redirect('/sign-in')->with('success', 'Selamat, anda berhasil membuat akun!');
+        return redirect('/sign-in')->with('success', 'PSelamat, anda berhasil membuat akun!');
     }
 
     public function dashboard()
     {
-        $dataUser = User::all()->get();
+        $dataUser = User::all();
 
-        $bookIdsInCollection = Collection::pluck('book_id');
-        $booksNotInCollection = Book::whereNotIn('id', $bookIdsInCollection)->get();
-        $bookFilter = $booksNotInCollection;
-        $review = Review::get();
-
-        return view('dashboard', compact('dataUser', 'bookFilter', 'review'));
+        return view('admin.data-user', compact('dataUser'));
     }
     // public function officer()
     // {
@@ -107,6 +102,7 @@ class AuthController extends Controller
             'username' => 'required|min:3|max:10',
             'email' => 'required',
             'password' => 'required',
+            'role' => 'required',
         ]);
 
         User::create([

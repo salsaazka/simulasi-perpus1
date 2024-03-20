@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Collection;
+use App\Models\Review;
 use App\Exports\BooksExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 use PDF;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -16,7 +19,13 @@ class BookController extends Controller
     public function index()
     {
         $dataBook = Book::with(['category'])->get();
-        return view('book.index', compact('dataBook'));
+        
+        $bookIdsInCollection = Collection::pluck('book_id');
+        $booksNotInCollection = Book::whereNotIn('id', $bookIdsInCollection)->get();
+        $bookFilter = $booksNotInCollection;
+        $review = Review::get();
+
+        return view('book.index', compact('dataBook', 'bookFilter', 'review'));
     }
 
     public function exportExcel()

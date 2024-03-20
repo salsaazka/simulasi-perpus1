@@ -31,11 +31,11 @@
                                     @endphp
                                     @foreach ($dataReview as $review)
                                     <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $review->user->name }}</td>
-                                        <td>{{ $review->book->title }}</td>
-                                        <td>{{ $review['rating'] }}</td>
-                                        <td>{{ $review['review'] }}</td>
+                                        <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $no++ }}</td>
+                                        <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $review->user->name }}</td>
+                                        <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $review->book->title }}</td>
+                                        <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $review['rating'] }}</td>
+                                        <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $review['review'] }}</td>
                                         {{-- <td class="d-flex">
                                             <a href="{{ route('review.edit', $review->id) }}" class="btn btn-warning" style="margin-right: 5px"><i class="fa-solid fa-pen-to-square"></i></a>
                                             <form action="/review/delete/{{ $review->id }}" method="POST">

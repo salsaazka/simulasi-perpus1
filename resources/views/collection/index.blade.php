@@ -15,23 +15,23 @@
                             <table class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-10">
                                             No
                                         </th>
                                         <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-10 ps-2">
                                             Title
                                         </th>
                                         <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-10 ps-2">
                                             Writer
                                         </th>
                                         <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-10 ps-2">
                                             publisher
                                         </th>
                                         <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-10 ps-2">
                                             Action
                                         </th>
                                     </tr>
@@ -43,10 +43,10 @@
                                     @endphp
                                     @foreach ($data as $item)
                                         <tr>
-                                            <td>{{ $no++ }}</td>
-                                            <td>{{ $item->book->title }}</td>
-                                            <td>{{ $item->book->writer }}</td>
-                                            <td>{{ $item->book->publisher }}</td>
+                                            <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $no++ }}</td>
+                                            <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $item->book->title }}</td>
+                                            <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $item->book->writer }}</td>
+                                            <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $item->book->publisher }}</td>
                                             <td>
                                                 {{-- <form action="{{ route('borrow.returnBook') }}" method="POST">
                                                     @method('POST')

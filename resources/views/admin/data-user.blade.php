@@ -7,7 +7,7 @@
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex align-items-center justify-content-between">
-                            <h6>Data table</h6>
+                            <h6>Data User</h6>
                             <a href="{{ route('dashboard.createUser') }}" class="btn add-new btn-success m-1 float-end"><i
                                     class="fa-solid fa-plus"></i></a>
                         </div>
@@ -16,19 +16,22 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-10">
                                                 NO</th>
                                             <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-10 ps-2">
                                                 Name</th>
                                             <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-10">
                                                 Email</th>
                                             <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-10">
                                                 Address</th>
                                             <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-10">
+                                                Role</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-10">
                                                 Action</th>
                                         </tr>
                                     </thead>
@@ -37,26 +40,26 @@
                                             $no = 1;
                                         @endphp
 
-                                        @foreach ($dataOffice as $officer)
+                                        @foreach ($dataUser as $user)
                                             <tr>
                                                 <td
-                                                    class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">
+                                                    class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">
                                                     {{ $no++ }}</td>
                                                 <td
-                                                    class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">
-                                                    {{ $officer['name'] }}</td>
+                                                    class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">
+                                                    {{ $user['name'] }}</td>
                                                 <td
-                                                    class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">
-                                                    {{ $officer['username'] }}</td>
+                                                    class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">
+                                                    {{ $user['email'] }}</td>
                                                 <td
-                                                    class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">
-                                                    {{ $officer['email'] }}</td>
+                                                    class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">
+                                                    {{ $user['address'] }}</td>
                                                 <td
-                                                    class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-7">
-                                                    {{ $officer['address'] }}</td>
+                                                class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">
+                                                {{ $user['role'] }}</td>
                                                 <td class="d-flex">
-                                                    <a href="{{ route('officer.edit', $officer->id) }}" class="btn btn-warning" style="margin-right: 5px"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                    <form action="/delete-officer/{{ $officer->id }}" method="POST">
+                                                    <a href="{{ route('dashboard.edit', $user->id) }}" class="btn btn-warning" style="margin-right: 5px"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                    <form action="/delete-user/{{ $user->id }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button type="submit" class="btn btn-danger"><i
@@ -73,73 +76,13 @@
             </div>
         @endif
         @if (auth()->user()->role === 'user')
-            <div class="mt-4">
-                <div class="w-100 container" style="margin-top: 6rem">
-                    <div>
-                        <h3 class="text-center text-light fw-bold">List Book</h1>
-                    </div>
-
-                    <div class="d-flex flex-wrap">
-                        {{-- @dd(Auth::user()) --}}
-                        {{-- @dd($bookFilter) --}}
-                        @foreach ($bookFilter as $item)
-                            <div class="w-25 d-flex justify-content-center align-items-center">
-                                <div class="card p-1" style="width: 95%">
-                                    <div class="w-100 overflow-hidden d-flex rounded position-relative"
-                                        style="max-height: 275px; min-height: 275px">
-                                        <img src="{{ url('assets/img/data/' . $item->image) }}"
-                                            class="position-absolute min-w-100 max-w-100 "
-                                            style="transform: translate(-50%, -50%); top: 50%; left: 50%;" alt="...">
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="mb-0 fw-bold" style="color: #1A1C19; font-size: 24px">
-                                            {{ $item->title }}
-                                        </p>
-                                        <div class="mb-1 d-flex align-items-center">
-                                            <p class="me-1 mb-0" style="color: #828282; font-size: 14px">
-                                                {{ $item->writer }}
-                                            </p>
-                                            <p class="mb-0" style="color: #1A1C19; font-size: 14px">|</p>
-                                            <i class="ms-1" style="color: #1A1C19; font-size: 14px">
-                                                {{ $item->publisher }}
-                                            </i>
-                                        </div>
-                                        <div class="mb-0 d-flex align-items-center">
-                                            <img src="{{ asset('assets/img/star.png') }}" alt=""
-                                                style="width: 24px; height: 24px">
-                                            <p class="ms-1 mb-0" style="color: #1A1C19; font-size: 14px">
-                                                {{ \App\Models\Review::with('book')->where('book_id', $item->id)->avg('rating') ?? 'Not Rated' }}
-                                            </p>
-                                        </div>
-                                        <button class="btn btn-primary mt-3 mb-0" style="width: 100%" data-bs-toggle="modal"
-                                            data-bs-target="#editModal" data-url="{{ route('borrow.borrowBook') }}"
-                                            data-auth="{{ Auth::user()->id }}" data-book="{{ $item->id }}"
-                                            data-img="{{ url('assets/img/data/' . $item->image) }}"
-                                            data-review="{{ htmlspecialchars(json_encode(DB::table('reviews')->where('book_id', $item->id)->get()),ENT_QUOTES,'UTF-8') }}"
-                                            data-title="{{ $item->title }}">
-                                            Borrow
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-
-                    <!-- Modal Edit -->
-                    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content" id="modal-content">
-
-                                {{-- content here --}}
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Modal Edit -->
-
-                </div>
+        <div class="card">
+            <div class="card-body">
+             <p class="text-muted">
+                Selamat datang di halaman dashboard, <b class="text-primary">{{ Auth::user()->name }} ! </b>
+             </p>
             </div>
+          </div>
         @endif
     </div>
     <!--   Core JS Files   -->

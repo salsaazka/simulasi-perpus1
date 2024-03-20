@@ -15,11 +15,11 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-10">
                                                 NO</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-10 ps-2">
                                                 Book Category</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-10">
                                                 Action</th>
                                         </tr>
                                     </thead>
@@ -30,8 +30,8 @@
 
                                         @foreach ($dataCategory as $category)
                                             <tr>
-                                                <td>{{ $no++ }}</td>
-                                                <td>{{ $category['name'] }}</td>
+                                                <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-9">{{ $no++ }}</td>
+                                                <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-9">{{ $category['name'] }}</td>
                                                 <td class="d-flex">
                                                     <a href="{{ route('category.edit', $category->id) }}" class="btn btn-warning" style="margin-right: 5px"><i class="fa-solid fa-pen-to-square"></i></a>
                                                     <form action="/category/delete/{{ $category->id }}" method="POST">
