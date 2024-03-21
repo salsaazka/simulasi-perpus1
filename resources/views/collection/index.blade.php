@@ -43,10 +43,18 @@
                                     @endphp
                                     @foreach ($data as $item)
                                         <tr>
-                                            <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $no++ }}</td>
-                                            <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $item->book->title }}</td>
-                                            <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $item->book->writer }}</td>
-                                            <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $item->book->publisher }}</td>
+                                            <td
+                                                class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">
+                                                {{ $no++ }}</td>
+                                            <td
+                                                class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">
+                                                {{ $item->book->title }}</td>
+                                            <td
+                                                class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">
+                                                {{ $item->book->writer }}</td>
+                                            <td
+                                                class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">
+                                                {{ $item->book->publisher }}</td>
                                             <td>
                                                 {{-- <form action="{{ route('borrow.returnBook') }}" method="POST">
                                                     @method('POST')
@@ -55,12 +63,21 @@
                                                     <button type="submit" class="btn btn-warning"><i
                                                             class="fa-solid fa-pen-to-square"></i></button>
                                                 </form> --}}
-                                                <button data-bs-toggle="modal" data-bs-target="#editModal"
+                                                {{-- <button data-bs-toggle="modal" data-bs-target="#editModal"
                                                     data-book="{{ $item->book->id }}"
                                                     data-url="{{ route('borrow.returnBook') }}"
                                                     data-auth="{{ Auth::user()->id }}" type="button"
                                                     class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i>
-                                                </button>
+                                                </button> --}}
+                                                <a class="btn btn-danger" href="{{ route('collection.destroy', ['id' => $item->id]) }}" onclick="event.preventDefault(); document.getElementById('delete-form').submit();">
+                                                    Delete
+                                                </a>
+                                                <form id="delete-form"
+                                                    action="{{ route('collection.destroy', ['id' => $item->id]) }}"
+                                                    method="POST" style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

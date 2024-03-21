@@ -16,11 +16,10 @@ class CollectionController extends Controller
     {
         $userId = Auth::user()->id;
         $data = Collection::with('book') // Eager load data book
-        ->where('user_id', $userId)
-        ->get();
+            ->where('user_id', $userId)
+            ->get();
 
-        return view('collection.index' , compact('data'));
-
+        return view('collection.index', compact('data'));
     }
 
     /**
@@ -36,7 +35,16 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $collection = Collection::firstOrCreate([
+            'user_id' => $request->user_id,
+            'book_id' => $request->book_id,
+        ]);
+
+        if ($collection->wasRecentlyCreated) {
+            return redirect()->route('collection.index')->with('add', 'Data koleksi buku berhasil ditambahkan');
+        } else {
+            return redirect()->back()->with('error', 'Data koleksi buku sudah ada');
+        }
     }
 
     /**
@@ -66,8 +74,8 @@ class CollectionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Collection $collection)
+    public function destroy($id)
     {
-        //
+
     }
 }

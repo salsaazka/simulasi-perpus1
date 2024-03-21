@@ -37,13 +37,13 @@ class BorrowController extends Controller
             'borrows.end_date as end_date',
             'borrows.status as status'
         )
-        ->join('users', 'borrows.user_id', '=', 'users.id')
-        ->join('books', 'borrows.book_id', '=', 'books.id')
-        ->orderBy('borrows.id', 'ASC')
-        ->get();
+            ->join('users', 'borrows.user_id', '=', 'users.id')
+            ->join('books', 'borrows.book_id', '=', 'books.id')
+            ->orderBy('borrows.id', 'ASC')
+            ->get();
         // $dataBorrow = Borrow::orderBy('id', 'ASC')->get();
         // share $dataBorrow to view (ambil data) -> redirect ke halaman view sama seperti compact
-        view()->share('dataBorrow',$dataBorrow);
+        view()->share('dataBorrow', $dataBorrow);
         // yang didalam petik nama yang ada di blade, $ ambil nama variable untuk models
         //kalau mau 'borrow.exportPdf'
         $pdf = PDF::loadView('borrow.borrowPdf', $dataBorrow->toArray());
@@ -77,52 +77,70 @@ class BorrowController extends Controller
 
     public function borrowBook(Request $request)
     {
+        // dd($request->all());
+        // $borrowedBook = Borrow::where('user_id', $request->user_id)
+        //     ->where('book_id', $request->book_id)
+        //     ->first();
 
-        $borrowedBook = Borrow::where('user_id', $request->user_id)
-            ->where('book_id', $request->book_id)
-            ->where('status', 'Dipinjam')
-            ->first();
+        Borrow::create([
+            'user_id' => $request->user_id,
+            'book_id' => $request->book_id,
+            'start_date' => now()->toDateString(),
+            'end_date' => null,
+            'status' => 'Dipinjam',
+        ]);
 
-        if (!$borrowedBook) {
-            // Jika buku belum pernah dipinjam, buat data peminjaman baru
-            Borrow::create([
-                'user_id' => $request->user_id,
-                'book_id' => $request->book_id,
-                'start_date' => now()->toDateString(),
-                'end_date' => $request->end_date,
-                'status' => 'Dipinjam',
-            ]);
+        return redirect()->route('borrow.index')->with('success', 'Buku berhasil dipinjam.');
 
-            Collection::create([
-                'user_id' => $request->user_id,
-                'book_id' => $request->book_id,
-            ]);
+        // if (!$borrowedBook) {
+        //     // Jika buku belum pernah dipinjam, buat data peminjaman baru
+        //     Borrow::create([
+        //         'user_id' => $request->user_id,
+        //         'book_id' => $request->book_id,
+        //         'start_date' => now()->toDateString(),
+        //         'end_date' => $request->end_date,
+        //         'status' => 'Dipinjam',
+        //     ]);
 
-            return redirect()->back()->with('success', 'Buku berhasil dipinjam.');
-        } else {
-            // Jika buku sudah dipinjam, set status menjadi "Dikembalikan"
-            $borrowedBook->update(['status' => 'Dikembalikan']);
+        //     Collection::create([
+        //         'user_id' => $request->user_id,
+        //         'book_id' => $request->book_id,
+        //     ]);
 
-            return redirect()->back()->with('success', 'Buku berhasil dikembalikan.');
-        }
+        //     return redirect()->back()->with('success', 'Buku berhasil dipinjam.');
+        // } else {
+        //     // Jika buku sudah dipinjam, set status menjadi "Dikembalikan"
+        //     $borrowedBook->update(['status' => 'Dikembalikan']);
+
+        //     return redirect()->back()->with('success', 'Buku berhasil dikembalikan.');
+        // }
     }
 
     public function returnBook(Request $request)
     {
-        // dd($request->all());
-       
-    $dataBorrow = Borrow::where('book_id', $request->book_id)->first();
 
-    if ($dataBorrow) {
+        $dataBorrow = Borrow::where('id', $request->id)->first();
         $dataBorrow->update([
             'status' => 'Dikembalikan',
             'end_date' => now()->toDateString(),
         ]);
 
         return redirect()->back()->with('success', 'Buku telah berhasil dikembalikan.');
-    } else {
-        return redirect()->back()->with('error', 'Data peminjaman tidak ditemukan.');
-    }
+
+        // dd($request->all());
+
+        // $dataBorrow = Borrow::where('book_id', $request->book_id)->first();
+
+        // if ($dataBorrow) {
+        //     $dataBorrow->update([
+        //         'status' => 'Dikembalikan',
+        //         'end_date' => now()->toDateString(),
+        //     ]);
+
+        //     return redirect()->back()->with('success', 'Buku telah berhasil dikembalikan.');
+        // } else {
+        //     return redirect()->back()->with('error', 'Data peminjaman tidak ditemukan.');
+        // }
 
         // Review::create([
         //     'user_id' => $request->user_id,

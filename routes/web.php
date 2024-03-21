@@ -52,6 +52,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('isLogin')->prefix('/book')->name('book.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('index');
+    Route::get('/{id}', [BookController::class, 'detail'])->name('detail');
     Route::get('/create-book', [BookController::class, 'create'])->name('create');
     Route::post('/create-book', [BookController::class, 'store'])->name('store');
     Route::get('/edit/{id}', [BookController::class, 'edit'])->name('edit');
@@ -72,7 +73,7 @@ Route::middleware('isLogin')->prefix('/borrow')->name('borrow.')->group(function
     Route::delete('/delete/{id}', [BorrowController::class, 'destroy'])->name('destroy');
     Route::get('/export_excel', [BorrowController::class, 'exportExcel'])->name('exportExcel');
     Route::get('/export_pdf', [BorrowController::class, 'exportPdf'])->name('exportPdf');
-    
+
 });
 
 Route::middleware('isLogin')->prefix('/category')->name('category.')->group(function () {

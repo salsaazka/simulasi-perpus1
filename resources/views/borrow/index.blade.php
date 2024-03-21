@@ -7,10 +7,10 @@
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex align-items-center justify-content-between">
                             <h6>Data table</h6>
-                           
+
                             <div class="d-flex">
                                 @if(auth()->user()->role === 'user')
-                                    <a href="{{ route('borrow.create') }}" class="btn add-new btn-success " style="margin-right: 5px"><i class="fa-solid fa-plus"></i></a>    
+                                    <a href="{{ route('borrow.create') }}" class="btn add-new btn-success " style="margin-right: 5px"><i class="fa-solid fa-plus"></i></a>
                                 @endif
                                     <a href="{{ route('borrow.exportExcel') }}" class="btn add-new btn-success" style="margin-right: 5px"><i class="fa-solid fa-file-excel"></i></a>
                                     <a href="{{ route('borrow.exportPdf') }}" class="btn add-new btn-warning"><i class="fa-regular fa-file-pdf"></i></a>
@@ -61,6 +61,7 @@
                                                     <form action="/borrow/return" method="POST">
                                                         @method('POST')
                                                         @csrf
+                                                        <input type="hidden" name="id" value="{{ $borrow->id }}">
                                                         <button type="submit" class="btn btn-primary">Return</button>
                                                     </form>
                                                 </td>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Collection;
+use App\Models\Borrow;
 use App\Models\Review;
 use App\Exports\BooksExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -19,13 +20,25 @@ class BookController extends Controller
     public function index()
     {
         $dataBook = Book::with(['category'])->get();
-        
-        $bookIdsInCollection = Collection::pluck('book_id');
-        $booksNotInCollection = Book::whereNotIn('id', $bookIdsInCollection)->get();
-        $bookFilter = $booksNotInCollection;
+
+        // $bookIdsInCollection = Collection::pluck('book_id');
+        // $booksNotInCollection = Book::whereNotIn('id', $bookIdsInCollection)->get();
+        // $bookFilter = $booksNotInCollection;
+        $book = Book::get();
+        // dapatkan list book_id dari Borrow
+        $borrowedBooks = Borrow::pluck('book_id');
+        // ambil borrow berdasarkan id bukku
+        $borrowedBook = Borrow::get();
         $review = Review::get();
 
-        return view('book.index', compact('dataBook', 'bookFilter', 'review'));
+        return view('book.index', compact('dataBook', 'book', 'review', 'borrowedBooks', 'borrowedBook'));
+    }
+
+    public function detail($id)
+    {
+        $dataBook = Book::where('id', $id)->first();
+        $review = Review::get();
+        return view('book.review', compact('dataBook', 'review'));
     }
 
     public function exportExcel()
@@ -97,9 +110,9 @@ class BookController extends Controller
             'title' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Perubahan validasi untuk memperbolehkan file kosong saat edit
         ]);
-    
+
         $book = Book::find($id);
-    
+
         if ($request->hasFile('image')) {
             // Hapus file gambar lama jika ada
             if ($book->image) {
@@ -108,17 +121,17 @@ class BookController extends Controller
                     File::delete($oldImagePath);
                 }
             }
-    
+
             // Proses upload gambar baru
             $image = $request->file('image');
             $imgName = time() . rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('/assets/img/data/'), $imgName);
-    
+
             $book->update([
                 'image' => $imgName,
             ]);
         }
-    
+
         // Update data buku tanpa mengubah gambar jika tidak ada gambar baru
         $book->update([
             'title' => $request->title,
