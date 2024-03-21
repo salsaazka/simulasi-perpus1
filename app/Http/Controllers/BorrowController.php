@@ -110,46 +110,30 @@ class BorrowController extends Controller
     public function returnBook(Request $request)
     {
         // dd($request->all());
-        $data = Borrow::where('book_id', $request->book_id)->first();
-        $data->update([
+       
+    $dataBorrow = Borrow::where('book_id', $request->book_id)->first();
+
+    if ($dataBorrow) {
+        $dataBorrow->update([
             'status' => 'Dikembalikan',
             'end_date' => now()->toDateString(),
         ]);
 
-        Review::create([
-            'user_id' => $request->user_id,
-            'book_id' => $request->book_id,
-            'review' => $request->review,
-            'rating' => $request->rating,
-        ]);
-        Collection::where('book_id', $request->book_id)->delete();
-
-        return redirect()->back()->with('success', 'Buku berhasil dikembalikan.');
+        return redirect()->back()->with('success', 'Buku telah berhasil dikembalikan.');
+    } else {
+        return redirect()->back()->with('error', 'Data peminjaman tidak ditemukan.');
     }
 
-    // public function returnBook(Request $request)
-    // {
+        // Review::create([
+        //     'user_id' => $request->user_id,
+        //     'book_id' => $request->book_id,
+        //     'review' => $request->review,
+        //     'rating' => $request->rating,
+        // ]);
+        // Collection::where('book_id', $request->book_id)->delete();
 
-    //     $borrowedBook = Borrow::where('user_id', $request->user_id)
-    //         ->where('book_id', $request->book_id)
-    //         ->where('status', 'Dipinjam')
-    //         ->first();
-
-    //     if ($borrowedBook) {
-    //         // Tambahkan log untuk melihat nilai variabel
-    //         \Log::info('Data Before Update:', ['data' => $borrowedBook->toArray()]);
-
-    //         // Hapus data peminjaman
-    //         $borrowedBook->delete();
-
-    //         // Tambahkan log untuk melihat data setelah update
-    //         \Log::info('Data After Update:', ['data' => $borrowedBook->fresh()->toArray()]);
-
-    //         return redirect()->back()->with('success', 'Buku berhasil dikembalikan.');
-    //     } else {
-    //         return redirect()->back()->with('error', 'Buku tidak sedang dipinjam atau data peminjaman tidak ditemukan.');
-    //     }
-    // }
+        // return redirect()->back()->with('success', 'Buku berhasil dikembalikan.');
+    }
 
     public function show(Borrow $borrow)
     {
@@ -180,6 +164,6 @@ class BorrowController extends Controller
     public function destroy($id)
     {
         Borrow::where('id', $id)->delete();
-        return view('/borrow')->with('deleteBor', 'Data Peminjaman berhasil dihapus');
+        return redirect()->route('borrow.index')->with('deleteBor', 'Data Peminjaman berhasil dihapus');
     }
 }

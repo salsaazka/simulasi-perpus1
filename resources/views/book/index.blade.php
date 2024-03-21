@@ -96,9 +96,16 @@
                                         style="transform: translate(-50%, -50%); top: 50%; left: 50%;" alt="...">
                                 </div>
                                 <div class="card-body">
-                                    <p class="mb-0 fw-bold" style="color: #1A1C19; font-size: 24px">
-                                        {{ $item->title }}
-                                    </p>
+                                    <div class="d-flex">
+                                        <p class="mb-0 fw-bold" style="color: #1A1C19; font-size: 24px">
+                                            {{ $item->title }}
+                                        </p>
+                                        <button data-bs-target="#modalReview"
+                                        data-book="{{ $item->book_id }}"
+                                        data-url="{{ route('borrow.returnBook') }}"
+                                        data-auth="{{ Auth::user()->id }}" type="button"  class="fa-solid fa-eye"></button>
+                                    </div>
+                                   
                                     <div class="mb-1 d-flex align-items-center">
                                         <p class="me-1 mb-0" style="color: #828282; font-size: 14px">
                                             {{ $item->writer }}
@@ -108,15 +115,37 @@
                                             {{ $item->publisher }}
                                         </i>
                                     </div>
-                                    <div class="mb-0 d-flex align-items-center">
+                                    {{-- <div class="mb-0 d-flex align-items-center">
                                         <img src="{{ asset('assets/img/star.png') }}" alt=""
                                             style="width: 24px; height: 24px">
                                         <p class="ms-1 mb-0" style="color: #1A1C19; font-size: 14px">
                                             {{ \App\Models\Review::with('book')->where('book_id', $item->id)->avg('rating') ?? 'Not Rated' }}
                                         </p>
+
+                                    </div> --}}
+                                    <div class="mb-0 d-flex align-items-center">
+                                        @php
+                                            $averageRating = \App\Models\Review::where('book_id', $item->id)->avg('rating');
+                                            $roundedRating = round($averageRating);
+                                        @endphp
+                                        @if ($roundedRating)
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $roundedRating)
+                                                    <img src="{{ asset('assets/img/star.png') }}" alt="Star Filled" style="width: 24px; height: 24px">
+                                                @endif
+                                            @endfor
+                                            {{-- <p class="ms-1 mb-0" style="color: #1A1C19; font-size: 14px">
+                                                {{ $roundedRating }} ({{ \App\Models\Review::where('book_id', $item->id)->count() }} reviews)
+                                            </p> --}}
+                                        @else
+                                            <p class="ms-1 mb-0" style="color: #1A1C19; font-size: 14px">Not Rated</p>
+                                        @endif
                                     </div>
+                                    
+                                    
+                                    
                                     <button class="btn btn-primary mt-3 mb-0" style="width: 100%" data-bs-toggle="modal"
-                                        data-bs-target="#editModal" data-url="{{ route('borrow.borrowBook') }}"
+                                        data-bs-target="#modalBorrow" data-url="{{ route('borrow.borrowBook') }}"
                                         data-auth="{{ Auth::user()->id }}" data-book="{{ $item->id }}"
                                         data-img="{{ url('assets/img/data/' . $item->image) }}"
                                         data-review="{{ htmlspecialchars(json_encode(DB::table('reviews')->where('book_id', $item->id)->get()),ENT_QUOTES,'UTF-8') }}"
@@ -129,8 +158,8 @@
                     @endforeach
                 </div>
 
-                <!-- Modal Edit -->
-                <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
+                <!-- Modal Borrow -->
+                <div class="modal fade" id="modalBorrow" tabindex="-1" aria-labelledby="modalBorrowLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content" id="modal-content">
@@ -140,15 +169,27 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Modal Edit -->
+                <!-- End Modal Review -->
 
+                 <!-- Modal Review -->
+                 <div class="modal fade" id="modalReview" tabindex="-1" aria-labelledby="modalReviewLabel"
+                 aria-hidden="true">
+                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                     <div class="modal-content" id="modal-content">
+
+                         {{-- content here --}}
+
+                     </div>
+                 </div>
+             </div>
+             <!-- End Modal Review -->
             </div>
         </div>
     @endif
     </div>
-
+{{-- modal borroe --}}
     <script>
-        $('#editModal').on('shown.bs.modal', function(e) {
+        $('#modalBorrow').on('shown.bs.modal', function(e) {
 
             var html = `
         <div class="modal-content" id="modal-content">
@@ -183,4 +224,44 @@
 
         });
     </script>
+
+    {{-- modal review --}}
+   
+    {{-- <script>
+        $('#modalReview').on('shown.bs.modal', function(e) {
+            var html = `
+            <div class="modal-content" id="modal-content">
+                    <div class="modal-body">
+                        <form method="post" action="${$(e.relatedTarget).data('url')}">
+                            @csrf
+                            <div class="form-group w-100 mb-0">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Rate</label>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ asset('assets/img/star.png') }}" alt="" class="me-2" style="width: 32px; height: 32px">
+                                        <input type="number" name="rating" class="ms-1 form-control w-25" min="1" max="5" oninput="validateInput(this)">
+                                    </div>
+                                </div>
+                                <label for="exampleInputEmail1" class="form-label">Comment</label>
+                                <div class="form-floating">
+                                    <textarea class="form-control" name="review" style="height: 100px"></textarea>
+                                    <label for="floatingTextarea2">Comments</label>
+                                </div>
+                                <input type="hidden" name="user_id" value="${$(e.relatedTarget).data('auth')}">
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary mt-3 mb-0">Submit</button>
+                                </div>
+                            </div>
+                            <input type="hidden" name="book_id" value="${$(e.relatedTarget).data('book')}">
+                           <div class="d-flex justify-content-end">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                `;
+
+            $('#modal-content').html(html);
+
+        });
+    </script> --}}
 @endsection

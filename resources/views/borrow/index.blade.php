@@ -51,11 +51,17 @@
                                                 <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $borrow['end_date'] }}</td>
                                                 <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $borrow['status'] }}</td>
                                                 <td class="d-flex">
+                                                    {{-- Edit & Delete optional --}}
                                                     <a href="{{ route('borrow.edit', $borrow->id) }}" class="btn btn-warning" style="margin-right: 5px"><i class="fa-solid fa-pen-to-square"></i></a>
                                                     <form action="/borrow/delete/{{ $borrow->id }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button type="submit"  class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                                    </form>
+                                                    <form action="/borrow/return" method="POST">
+                                                        @method('POST')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-primary">Return</button>
                                                     </form>
                                                 </td>
                                             </tr>
