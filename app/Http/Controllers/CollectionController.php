@@ -76,6 +76,7 @@ class CollectionController extends Controller
      */
     public function destroy($id)
     {
-
+        Collection::where('id', $id)->delete();
+        return redirect()->route('collection.index')->with('delete', 'Data koleksi buku berhasil dihapus');
     }
 }

@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         $user = $request->only('username', 'password');
         if (Auth::attempt($user)) {
-            return redirect()->route('dashboard.dashboard');
+            return redirect('/dashboard');
         } else {
             return redirect('/sign-in')->with('fail', 'Gagal login, silahkan periksa dan coba lagi!');
         }

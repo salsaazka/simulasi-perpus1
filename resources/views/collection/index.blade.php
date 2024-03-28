@@ -69,14 +69,10 @@
                                                     data-auth="{{ Auth::user()->id }}" type="button"
                                                     class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i>
                                                 </button> --}}
-                                                <a class="btn btn-danger" href="{{ route('collection.destroy', ['id' => $item->id]) }}" onclick="event.preventDefault(); document.getElementById('delete-form').submit();">
-                                                    Delete
-                                                </a>
-                                                <form id="delete-form"
-                                                    action="{{ route('collection.destroy', ['id' => $item->id]) }}"
-                                                    method="POST" style="display: none;">
-                                                    @csrf
+                                                <form action="/collection/delete/{{ $item->id }}" method="POST">
                                                     @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit"  class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>

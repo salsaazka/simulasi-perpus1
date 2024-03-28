@@ -89,7 +89,7 @@ class BorrowController extends Controller
             'end_date' => null,
             'status' => 'Dipinjam',
         ]);
-
+        
         return redirect()->route('borrow.index')->with('success', 'Buku berhasil dipinjam.');
 
         // if (!$borrowedBook) {

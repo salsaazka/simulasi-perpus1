@@ -12,8 +12,10 @@
                                 @if(auth()->user()->role === 'user')
                                     <a href="{{ route('borrow.create') }}" class="btn add-new btn-success " style="margin-right: 5px"><i class="fa-solid fa-plus"></i></a>
                                 @endif
-                                    <a href="{{ route('borrow.exportExcel') }}" class="btn add-new btn-success" style="margin-right: 5px"><i class="fa-solid fa-file-excel"></i></a>
-                                    <a href="{{ route('borrow.exportPdf') }}" class="btn add-new btn-warning"><i class="fa-regular fa-file-pdf"></i></a>
+                                @if (auth()->user()->role === 'admin' || auth()->user()->role === 'officer')   
+                                <a href="{{ route('borrow.exportExcel') }}" class="btn add-new btn-success" style="margin-right: 5px"><i class="fa-solid fa-file-excel"></i></a>
+                                <a href="{{ route('borrow.exportPdf') }}" class="btn add-new btn-warning"><i class="fa-regular fa-file-pdf"></i></a>
+                                @endif
                             </div>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
@@ -52,17 +54,21 @@
                                                 <td class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">{{ $borrow['status'] }}</td>
                                                 <td class="d-flex">
                                                     {{-- Edit & Delete optional --}}
-                                                    <a href="{{ route('borrow.edit', $borrow->id) }}" class="btn btn-warning" style="margin-right: 5px"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                    <form action="/borrow/delete/{{ $borrow->id }}" method="POST">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <button type="submit"  class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                                    @if (auth()->user()->role === 'admin' || auth()->user()->role === 'officer')
+                                                        <a href="{{ route('borrow.edit', $borrow->id) }}" class="btn btn-warning" style="margin-right: 5px"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                        <form action="/borrow/delete/{{ $borrow->id }}" method="POST">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <button type="submit"  class="btn btn-danger"  style="margin-right: 5px"><i class="fa-solid fa-trash"></i></button>
                                                     </form>
+                                                        
+                                                    @endif
                                                     <form action="/borrow/return" method="POST">
                                                         @method('POST')
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{ $borrow->id }}">
-                                                        <button type="submit" class="btn btn-primary">Return</button>
+                                                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                                        <button type="submit" class="btn btn-primary" {{ $borrow->status == 'Dikembalikan' || $borrow->user_id !== Auth::user()->id ? 'disabled' : '' }}>Return</button>
                                                     </form>
                                                 </td>
                                             </tr>
