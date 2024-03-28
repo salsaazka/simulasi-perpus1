@@ -41,8 +41,8 @@
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-10">
                                                 Year</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-10">
-                                                Category</th>
+                                            {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-10">
+                                                Category</th> --}}
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-10">
                                                 Action</th>
@@ -75,7 +75,7 @@
                                                     class="text-center text-uppercase text-dark text-xxs font-weight-bolder opacity-10">
                                                     {{ $book['year'] }}</td>
 
-                                                <td>{{ $book->category->name }}</td>
+                                                {{-- <td>{{ $book->category->name }}</td> --}}
                                                 <td class="d-flex">
                                                     <a href="{{ route('book.edit', $book->id) }}" class="btn btn-warning"
                                                         style="margin-right: 5px"><i
@@ -265,4 +265,43 @@
         });
     </script>
 
+    {{-- modal review --}}
+
+    {{-- <script>
+        $('#modalReview').on('shown.bs.modal', function(e) {
+            var html = `
+            <div class="modal-content" id="modal-content">
+                    <div class="modal-body">
+                        <form method="post" action="${$(e.relatedTarget).data('url')}">
+                            @csrf
+                            <div class="form-group w-100 mb-0">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Rate</label>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ asset('assets/img/star.png') }}" alt="" class="me-2" style="width: 32px; height: 32px">
+                                        <input type="number" name="rating" class="ms-1 form-control w-25" min="1" max="5" oninput="validateInput(this)">
+                                    </div>
+                                </div>
+                                <label for="exampleInputEmail1" class="form-label">Comment</label>
+                                <div class="form-floating">
+                                    <textarea class="form-control" name="review" style="height: 100px"></textarea>
+                                    <label for="floatingTextarea2">Comments</label>
+                                </div>
+                                <input type="hidden" name="user_id" value="${$(e.relatedTarget).data('auth')}">
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary mt-3 mb-0">Submit</button>
+                                </div>
+                            </div>
+                            <input type="hidden" name="book_id" value="${$(e.relatedTarget).data('book')}">
+                           <div class="d-flex justify-content-end">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                `;
+
+            $('#modal-content').html(html);
+
+        });
+    </script> --}}
 @endsection
